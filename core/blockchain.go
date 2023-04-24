@@ -70,11 +70,11 @@ func (bc *BlockChain) getBlock(seq uint64) *Block {
 		Seq:  seq,
 		Data: data,
 	}
-	bc.logger.DPrintf("generate Block[%v] in seq %v at %v", Block2Key(block), block.Seq, time.Now().Nanosecond())
+	bc.logger.DPrintf("generate Block[%v] in seq %v at %v", Block2Key(block), block.Seq, time.Now().UnixNano())
 	return block
 }
 
 func (bc *BlockChain) commitBlock(block *Block) {
 	bc.AddBlockToChain(block)
-	bc.logger.DPrintf("commit Block[%v] in seq %v at %v", Block2Key(block), block.Seq, time.Now().Nanosecond())
+	bc.logger.DPrintf("commit Block[%v] in seq %v at %v", Block2Key(block), block.Seq, time.Now().UnixNano())
 }
