@@ -39,7 +39,7 @@ def check_safety(nodes):
                 commits1 = nodes[i].commits
                 commits2 = nodes[j].commits
                 k = 0
-                for k in range(min(nodes[i].maxSeq, nodes[i].maxSeq)):
+                for k in range(min(nodes[i].maxSeq, nodes[j].maxSeq)):
                     block1 = None
                     if k in commits1.keys():
                         block1 = commits1[k]
