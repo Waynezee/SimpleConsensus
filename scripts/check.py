@@ -25,8 +25,9 @@ class node_info:
                         self.maxSeq = max(self.maxSeq, int(m2.group(2)))
                         self.commits[int(m2.group(2))] = m2.group(1)
                     else:
-                        print(f"node {id} has two or more commits at position {m2.group(2)}")
-                        sys.exit(-1)
+                        if self.commits[int(m2.group(2))] != m2.group(1):
+                            print(f"node {id} has two or more different commits at position {m2.group(2)}")
+                            sys.exit(-1)
             
             print(f"node {id} commits {len(self.commits.keys())} times")    
 
