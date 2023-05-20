@@ -15,4 +15,4 @@ tmux kill-window -t node$2
 
 sleep 25
 
-python3 check.py 7
+python3 check.py 7 $1 $2

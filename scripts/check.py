@@ -68,20 +68,33 @@ def check_validity(nodes):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python3 check.py [node number]")
+    if len(sys.argv) < 2:
+        print("Usage: python3 check.py [node number] [crash node...] ")
+        print("\t node number: total node number \n")
+        print("\t crash node: 0-2 crash nodes\n") 
         sys.exit()
     n = 0
     try:
         n = int(sys.argv[1])
+        crash_nodes = []
+        if len(sys.argv) >= 3:
+            crash_nodes = [int(x) for x in sys.argv[2:]]    
     except e:
         print("The parameter must be an integer")
         sys.exit()
     print("----------begin to check------------")
     nodes = []
+    nodes_for_safety = []
+
     for i in range(n):
         node = node_info(i)
         nodes.append(node) 
+    
+    for i in range(n):
+        if i not in crash_nodes:
+            nodes_for_safety.append(nodes[i]) 
+
+
     print("---------- check validity ------------")
     if check_validity(nodes):
         print("pass")
@@ -89,7 +102,7 @@ if __name__ == "__main__":
         print("not pass")
 
     print("---------- check safety --------------")
-    if check_safety(nodes):
+    if check_safety(nodes_for_safety):
         print("pass")
     else:
         print("not pass")
