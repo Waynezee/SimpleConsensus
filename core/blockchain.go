@@ -3,6 +3,7 @@ package core
 import (
 	"math/rand"
 	"nis3607/mylogger"
+	"sync"
 	"time"
 )
 
@@ -18,6 +19,7 @@ type BlockChain struct {
 	BlocksMap map[string]*Block
 	KeysMap   map[*Block]string
 	logger    *mylogger.MyLogger
+	mu        sync.Mutex
 }
 
 func InitBlockChain(id uint8, blocksize uint64) *BlockChain {
@@ -32,6 +34,7 @@ func InitBlockChain(id uint8, blocksize uint64) *BlockChain {
 		BlocksMap: blocksMap,
 		KeysMap:   keysMap,
 		logger:    mylogger.InitLogger("blockchain", id),
+		mu:        sync.Mutex{},
 	}
 	return blockChain
 }
@@ -53,6 +56,8 @@ func Block2Key(block *Block) string {
 }
 
 func (bc *BlockChain) AddBlockToChain(block *Block) {
+	bc.mu.Lock()
+	defer bc.mu.Unlock()
 	bc.Blocks = append(bc.Blocks, block)
 	bc.KeysMap[block] = Block2Key(block)
 	bc.BlocksMap[Block2Key(block)] = block
