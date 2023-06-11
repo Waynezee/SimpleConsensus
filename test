@@ -1,0 +1,28 @@
+package myrpc
+
+// MessageType example
+type MessageType uint8
+
+const (
+	PROPOSAL MessageType = iota
+	ACCEPT
+)
+
+type ConsensusMsg struct {
+	msgType MessageType
+	content []byte
+}
+func run() {
+
+	for {
+		msg := <-msgChan
+		switch  msg.msgType {
+		case myrpc.PROPOSAL:
+			c.handleProposalMsg(msg) 
+		case myrpc.ACCEPT:
+			c.handleAcceptMsgs(msg) 
+	}
+
+}
+
+
